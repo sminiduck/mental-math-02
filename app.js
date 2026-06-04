@@ -48,7 +48,7 @@ $menuForm.addEventListener("submit", (e) => {
   state.probGen = probBook.select(state.mode);
   state.total = Number(data.get("total"));
   const accuarcy = data.get("accuracy");
-  const detail = data.get("detail");
+  const detail = Number(data.get("detail"));
   state.checkAns = checkAnsBook.select(accuarcy, detail);
 
   movePage("quiz");
@@ -119,6 +119,7 @@ function backspace() {
 function submitAnswer() {
   const userAns = Number(document.getElementById("answer").value);
   const corrAns = Number(state.currProb.answer);
+
   if (state.checkAns(userAns, corrAns)) {
     state.score++;
     if (state.countProb === state.total) {

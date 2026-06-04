@@ -48,31 +48,36 @@ function divGen() {
   }
 }
 
+const exactCheck = detail => (test, ref) => test === ref;
+
+export const percentCheck = detail => (test, ref) => {
+  if (ref === 0) {
+    return toleranceCheck(0.1)(test,ref);
+  } else {
+    return Math.abs(test-ref)/Math.abs(ref) <= detail/100;
+  }
+};
+
+const toleranceCheck = detail => (test, ref) => (Math.abs(test-ref) <= detail);
+
 
 export const checkAnsBook = {
   checkAnss: {
     exact: { func: exactCheck, text: "정확히 일치"},
-    percent: { func: percentCheck, text: "퍼센트" },
-    fix: { func: fixCheck, text: "소수점" },
+    percent: { func: percentCheck, text: "오차율%" },
+    fix: { func: toleranceCheck, text: "허용오차" },
   },
   Ids() {
     return Object.entries(this.checkAnss).map(([Id, val]) => (
       { value: Id, text: val.text }
     ));
   },
-  select(Id, data) {
-    return this.checkAnss[Id].func;
+  select(Id, detail) {
+    return this.checkAnss[Id].func(detail);
   }
 
 };
 
-function exactCheck(test, ref) {
-  return test === ref;
-}
-
-function percentCheck() {}
-
-function fixCheck() {}
 
 
 
