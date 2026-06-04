@@ -50,7 +50,7 @@ function divGen() {
 
 const exactCheck = (detail) => (test, ref) => test === ref;
 
-export const percentCheck = (detail) => (test, ref) => {
+const percentCheck = (detail) => (test, ref) => {
   if (ref === 0) {
     return toleranceCheck(0.1)(test, ref);
   } else {

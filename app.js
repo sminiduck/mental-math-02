@@ -19,6 +19,7 @@ function movePage(moveId) {
   state.currPage = moveId;
 }
 
+// menu page
 const $selectMode = document.getElementById('mode');
 for (const el of probBook.Ids()) {
   const option = document.createElement('option');
@@ -46,27 +47,30 @@ $menuForm.addEventListener('submit', (e) => {
   const data = new FormData($menuForm);
 
   state.mode = data.get('mode');
-  state.probGen = probBook.select(state.mode);
   state.total = Number(data.get('total'));
   const accuarcy = data.get('accuracy');
   const detail = Number(data.get('detail'));
+
+  state.probGen = probBook.select(state.mode);
   state.checkAns = checkAnsBook.select(accuarcy, detail);
 
-  movePage('quiz');
   nextProblem();
+  movePage('quiz');
 });
 
+// quiz page
 function nextProblem() {
   state.currProb = state.probGen();
-  state.countProb += 1;
-  state.countWrong = 0;
   document.getElementById('problem').textContent = state.currProb.probDisp;
   document.getElementById('answer').value = '';
+
+  state.countProb += 1;
+  state.countWrong = 0;
+
   console.log(state);
 }
 
 const $keypad = document.getElementById('keypad');
-
 $keypad.addEventListener('click', (e) => {
   const button = e.target;
 
@@ -94,17 +98,16 @@ $keypad.addEventListener('click', (e) => {
   }
 });
 
-function allClear() {
-  document.getElementById('answer').value = '';
-}
-
 function press(num) {
   document.getElementById('answer').value += num;
 }
 
+function allClear() {
+  document.getElementById('answer').value = '';
+}
+
 function backspace() {
   const input = document.getElementById('answer');
-
   input.value = input.value.slice(0, -1);
 }
 
@@ -122,7 +125,9 @@ function submitAnswer() {
       nextProblem();
     }
   } else {
-    if (state.countWrong === 2) {
+    console.log('wrong');
+    state.countWrong++;
+    if (state.countWrong === 3) {
       state.countWrong = 0;
       document.getElementById('answer').value = state.currProb.answer;
       setKeypadEnabled(false);
@@ -131,9 +136,6 @@ function submitAnswer() {
       setTimeout(() => {
         document.getElementById('wrongNext').disabled = false;
       }, 1700);
-    } else {
-      console.log('wrong');
-      state.countWrong++;
     }
   }
 }
@@ -151,6 +153,14 @@ function wrongNext() {
   setKeypadEnabled(true);
 }
 
+const $keypadButtons = document.querySelectorAll('#keypad button');
+function setKeypadEnabled(enabled) {
+  $keypadButtons.forEach((button) => {
+    button.disabled = !enabled;
+  });
+}
+
+// result page
 document.getElementById('goMenu').addEventListener('click', () => {
   Object.assign(state, INITIAL_STATE);
   movePage('menu');
@@ -162,11 +172,3 @@ document.getElementById('reQuiz').addEventListener('click', () => {
   nextProblem();
   movePage('quiz');
 });
-
-const $keypadButtons = document.querySelectorAll('#keypad button');
-
-function setKeypadEnabled(enabled) {
-  $keypadButtons.forEach((button) => {
-    button.disabled = !enabled;
-  });
-}
