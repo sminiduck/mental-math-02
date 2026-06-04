@@ -1,7 +1,4 @@
-import {
-  probBook,
-  checkAnsBook
-} from "./data.js";
+import { probBook, checkAnsBook } from './data.js';
 
 const INITIAL_STATE = {
   mode: null,
@@ -11,14 +8,20 @@ const INITIAL_STATE = {
   score: 0,
   countProb: 0,
   total: 0,
-  countWrong: 0
+  countWrong: 0,
 };
 
-const state = { ...INITIAL_STATE , currPage: "menu"};
+const state = { ...INITIAL_STATE, currPage: 'menu' };
 
-const $selectMode = document.getElementById("mode");
+function movePage(moveId) {
+  document.getElementById(state.currPage).style.display = 'none';
+  document.getElementById(moveId).style.display = 'block';
+  state.currPage = moveId;
+}
+
+const $selectMode = document.getElementById('mode');
 for (const el of probBook.Ids()) {
-  const option = document.createElement("option");
+  const option = document.createElement('option');
 
   option.value = el.value;
   option.textContent = el.text;
@@ -26,9 +29,9 @@ for (const el of probBook.Ids()) {
   $selectMode.appendChild(option);
 }
 
-const $selectAccuracy = document.getElementById("accuracy");
+const $selectAccuracy = document.getElementById('accuracy');
 for (const el of checkAnsBook.Ids()) {
-  const option = document.createElement("option");
+  const option = document.createElement('option');
 
   option.value = el.value;
   option.textContent = el.text;
@@ -36,45 +39,35 @@ for (const el of checkAnsBook.Ids()) {
   $selectAccuracy.appendChild(option);
 }
 
-
-const $menuForm = document.getElementById("menuForm");
-
-$menuForm.addEventListener("submit", (e) => {
+const $menuForm = document.getElementById('menuForm');
+$menuForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const data = new FormData($menuForm);
 
-  state.mode = data.get("mode");
+  state.mode = data.get('mode');
   state.probGen = probBook.select(state.mode);
-  state.total = Number(data.get("total"));
-  const accuarcy = data.get("accuracy");
-  const detail = Number(data.get("detail"));
+  state.total = Number(data.get('total'));
+  const accuarcy = data.get('accuracy');
+  const detail = Number(data.get('detail'));
   state.checkAns = checkAnsBook.select(accuarcy, detail);
 
-  movePage("quiz");
+  movePage('quiz');
   nextProblem();
 });
-
-function movePage(moveId) {
-  document.getElementById(state.currPage).style.display = "none";
-  document.getElementById(moveId).style.display = "block";
-  state.currPage = moveId;
-}
 
 function nextProblem() {
   state.currProb = state.probGen();
   state.countProb += 1;
   state.countWrong = 0;
-  document.getElementById("problem").textContent = state.currProb.probDisp;
-  document.getElementById("answer").value = "";
+  document.getElementById('problem').textContent = state.currProb.probDisp;
+  document.getElementById('answer').value = '';
   console.log(state);
 }
 
+const $keypad = document.getElementById('keypad');
 
-
-const $keypad = document.getElementById("keypad");
-
-$keypad.addEventListener("click", (e) => {
+$keypad.addEventListener('click', (e) => {
   const button = e.target;
 
   if (button.dataset.value) {
@@ -83,103 +76,97 @@ $keypad.addEventListener("click", (e) => {
   }
 
   switch (button.dataset.action) {
-    case "allClear":
+    case 'allClear':
       allClear();
       break;
 
-    case "backspace":
+    case 'backspace':
       backspace();
       break;
 
-    case "submit":
+    case 'submit':
       submitAnswer();
       break;
 
-    case "wrongNext":
+    case 'wrongNext':
       wrongNext();
       break;
   }
 });
 
 function allClear() {
-  document.getElementById("answer").value = '';
+  document.getElementById('answer').value = '';
 }
 
-
 function press(num) {
-  document.getElementById("answer").value += num;
+  document.getElementById('answer').value += num;
 }
 
 function backspace() {
-  const input = document.getElementById("answer");
+  const input = document.getElementById('answer');
 
   input.value = input.value.slice(0, -1);
 }
 
 function submitAnswer() {
-  const userAns = Number(document.getElementById("answer").value);
+  const userAns = Number(document.getElementById('answer').value);
   const corrAns = Number(state.currProb.answer);
 
   if (state.checkAns(userAns, corrAns)) {
     state.score++;
     if (state.countProb === state.total) {
-      document.getElementById("score").value
-       = `${state.score} / ${state.total} = ${state.score / state.total * 100}%`;
-      movePage("result");
+      document.getElementById('score').value =
+        `${state.score} / ${state.total} = ${(state.score / state.total) * 100}%`;
+      movePage('result');
     } else {
       nextProblem();
     }
   } else {
     if (state.countWrong === 2) {
       state.countWrong = 0;
-      document.getElementById("answer").value = state.currProb.answer;
+      document.getElementById('answer').value = state.currProb.answer;
       setKeypadEnabled(false);
-      document.getElementById("submitAns").style.display = "none";
-      document.getElementById("wrongNext").style.display = "inline-block";
+      document.getElementById('submitAns').style.display = 'none';
+      document.getElementById('wrongNext').style.display = 'inline-block';
       setTimeout(() => {
-        document.getElementById("wrongNext").disabled = false;
+        document.getElementById('wrongNext').disabled = false;
       }, 1700);
     } else {
-      console.log("wrong");
+      console.log('wrong');
       state.countWrong++;
     }
-    
   }
 }
 
 function wrongNext() {
   if (state.countProb === state.total) {
-    document.getElementById("score").value
-      = `${state.score} / ${state.total} = ${state.score / state.total * 100}%`;
-    movePage("result");
+    document.getElementById('score').value =
+      `${state.score} / ${state.total} = ${(state.score / state.total) * 100}%`;
+    movePage('result');
   } else {
     nextProblem();
   }
-  document.getElementById("wrongNext").style.display = "none";
-  document.getElementById("submitAns").style.display = "inline-block";
+  document.getElementById('wrongNext').style.display = 'none';
+  document.getElementById('submitAns').style.display = 'inline-block';
   setKeypadEnabled(true);
 }
 
-
-document.getElementById("goMenu").addEventListener("click", () => {
+document.getElementById('goMenu').addEventListener('click', () => {
   Object.assign(state, INITIAL_STATE);
-  movePage("menu")
-})
+  movePage('menu');
+});
 
-document.getElementById("reQuiz").addEventListener("click", () => {
+document.getElementById('reQuiz').addEventListener('click', () => {
   state.score = 0;
   state.countProb = 0;
   nextProblem();
-  movePage("quiz");
-})
+  movePage('quiz');
+});
 
-
-
-const $keypadButtons =
-  document.querySelectorAll("#keypad button");
+const $keypadButtons = document.querySelectorAll('#keypad button');
 
 function setKeypadEnabled(enabled) {
-  $keypadButtons.forEach(button => {
+  $keypadButtons.forEach((button) => {
     button.disabled = !enabled;
   });
 }

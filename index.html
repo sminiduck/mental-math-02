@@ -1,66 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Mental Math 02</title>
-</head>
-<body>
-
-  <!-- 연산 선택 화면 -->
-  <div id="menu">
-    <h1>암산 퀴즈</h1>
-    <form id="menuForm">
-      <label for="mode">문항 유형:</label>
-      <select id="mode" name="mode"></select><br>
-      <label for="total">문항 수:</label>
-      <input type="number" id="total" name="total" min="1" value="5"><br>
-      <label for="accuracy">정확도:</label>
-      <select id="accuracy" name="accuracy"></select><br>
-      <label for="detail">인수:</label>
-      <input type="text" id="detail" name="detail" required><br>
-      <button type="submit">시작</button>
-    </form>
-
-    
-  </div>
-
-  <!-- 퀴즈 화면 -->
-  <div id="quiz" style="display:none">
-    <h2 id="problem"></h2>
-    <input id="answer" readonly>
-
-    <br><br>
-        
-    <div id="keypad">
-      <button data-action="allClear">AC</button>
-      <button data-action="backspace">←</button>
-      <br>
-      <button data-value="7">7</button>
-      <button data-value="8">8</button>
-      <button data-value="9">9</button>
-      <br>
-      <button data-value="4">4</button>
-      <button data-value="5">5</button>
-      <button data-value="6">6</button>
-      <br>
-      <button data-value="1">1</button>
-      <button data-value="2">2</button>
-      <button data-value="3">3</button>
-      <br>
-      <button data-value="0">0</button>
-      <button data-value=".">.</button>
-      <button data-action="submit" id="submitAns">✓</button>
-      <button data-action="wrongNext" id="wrongNext" style="display:none;">-></button>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mental Math 02</title>
+  </head>
+  <body>
+    <!-- 연산 선택 화면 -->
+    <div id="menu">
+      <h1>암산 퀴즈</h1>
+      <form id="menuForm">
+        <label for="mode">문항 유형:</label>
+        <select id="mode" name="mode"></select
+        ><br />
+        <label for="total">문항 수:</label>
+        <input type="number" id="total" name="total" min="1" value="5" /><br />
+        <label for="accuracy">정확도:</label>
+        <select id="accuracy" name="accuracy"></select
+        ><br />
+        <label for="detail">인수:</label>
+        <input type="text" id="detail" name="detail" required /><br />
+        <button type="submit">시작</button>
+      </form>
     </div>
-  </div>
 
-  <div id="result" style="display:none">
-    <input type="text" id="score">
-    <button id="goMenu">메뉴로</button>
-    <button id="reQuiz">다시</button>
-  </div>
+    <!-- 퀴즈 화면 -->
+    <div id="quiz" style="display: none">
+      <h2 id="problem"></h2>
+      <input id="answer" readonly />
 
-  <script type="module" src="app.js"></script>
+      <br /><br />
 
-</body>
+      <div id="keypad">
+        <button data-action="allClear">AC</button>
+        <button data-action="backspace">←</button>
+        <br />
+        <button data-value="7">7</button>
+        <button data-value="8">8</button>
+        <button data-value="9">9</button>
+        <br />
+        <button data-value="4">4</button>
+        <button data-value="5">5</button>
+        <button data-value="6">6</button>
+        <br />
+        <button data-value="1">1</button>
+        <button data-value="2">2</button>
+        <button data-value="3">3</button>
+        <br />
+        <button data-value="0">0</button>
+        <button data-value=".">.</button>
+        <button data-action="submit" id="submitAns">✓</button>
+        <button data-action="wrongNext" id="wrongNext" style="display: none">
+          ->
+        </button>
+      </div>
+    </div>
+
+    <!-- 결과 화면 -->
+    <div id="result" style="display: none">
+      <input type="text" id="score" />
+      <button id="goMenu">메뉴로</button>
+      <button id="reQuiz">다시</button>
+    </div>
+
+    <script type="module" src="app.js"></script>
+  </body>
 </html>
