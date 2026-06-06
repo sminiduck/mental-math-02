@@ -73,7 +73,7 @@ function nextProblem() {
 const $keypad = document.getElementById('keypad');
 $keypad.addEventListener('click', (e) => {
   const button = e.target;
-  e.currentTarget.blur();
+  button.blur?.();
   if (button.dataset.value) {
     press(button.dataset.value);
     return;
