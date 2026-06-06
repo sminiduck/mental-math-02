@@ -1,4 +1,9 @@
 /* 공통 */
+:root {
+  --display-ratio: 1;
+  --keypad-ratio: 1;
+}
+
 *,
 *::before,
 *::after {
@@ -25,12 +30,11 @@ body {
 }
 
 .screen {
-  display: none;
   height: 100%;
 }
 
-.screen.active {
-  display: block;
+.hidden {
+  display: none !important;
 }
 
 /* menu page */
@@ -42,17 +46,23 @@ body {
 }
 
 /* quiz page */
+#quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
 #display {
-  height: 50%;
+  flex: var(--display-ratio);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
 }
 
 #problem {
   text-align: center;
-
   font-size: 2rem;
-
-  padding-top: 100px;
-  padding-bottom: 40px;
 }
 
 #answer {
@@ -65,8 +75,8 @@ body {
 }
 
 #keypad {
+  flex: var(--keypad-ratio);
   width: 100%;
-  height: 50%;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);

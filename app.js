@@ -14,8 +14,8 @@ const INITIAL_STATE = {
 const state = { ...INITIAL_STATE, currPage: 'menu' };
 
 function movePage(moveId) {
-  document.getElementById(state.currPage).classList.remove('active');
-  document.getElementById(moveId).classList.add('active');
+  document.getElementById(moveId).classList.remove('hidden');
+  document.getElementById(state.currPage).classList.add('hidden');
   state.currPage = moveId;
 }
 
