@@ -105,13 +105,11 @@ button {
   cursor: pointer;
 }
 
-button:hover {
-  opacity: 0.9;
-  background-color: #305df0;
-}
-
-button:active {
-  transform: scale(0.98);
+@media (pointer: fine) {
+  button:hover {
+    opacity: 0.9;
+    background-color: #305df0;
+  }
 }
 
 /* quiz screen */
@@ -147,6 +145,10 @@ button:active {
   font-size: 2rem;
 }
 
+#answer:focus {
+  background: red !important;
+}
+
 #keypad {
   flex: var(--keypad-ratio);
   width: 100%;
@@ -165,7 +167,8 @@ button:active {
   border-radius: 0;
   cursor: pointer;
   font-size: 18px;
-  transition: filter 0.05s;
+  transition: filter 0.15s ease-out;
+  transform: none;
 }
 
 #keypad button[data-action='allClear'] {
@@ -177,20 +180,20 @@ button:active {
   background-color: #f9a825;
 }
 
-@media (hover: hover) {
+@media (pointer: fine) {
   #keypad button:hover:not(:active) {
     filter: brightness(0.9);
   }
 }
 
-#keypad button:active {
-  transform: none;
-  filter: brightness(0.8);
-}
-
 #keypad button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+#keypad .pressed {
+  filter: brightness(0.8);
+  transition-duration: 0ms;
 }
 
 /* result screen */

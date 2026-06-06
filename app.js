@@ -71,9 +71,12 @@ function nextProblem() {
 }
 
 const $keypad = document.getElementById('keypad');
-$keypad.addEventListener('click', (e) => {
+$keypad.addEventListener('pointerdown', (e) => {
   const button = e.target;
-  button.blur?.();
+  if (!button) return;
+  if (button.disabled) return;
+
+  button.classList.add('pressed');
   if (button.dataset.value) {
     press(button.dataset.value);
     return;
@@ -97,6 +100,22 @@ $keypad.addEventListener('click', (e) => {
       break;
   }
 });
+
+$keypad.addEventListener('pointerup', (e) => {
+  const button = e.target.closest('button');
+  if (!button) return;
+
+  button.classList.remove('pressed');
+});
+
+$keypad.addEventListener('pointercancel', (e) => {
+  const button = e.target.closest('button');
+  if (!button) return;
+
+  button.classList.remove('pressed');
+});
+
+$keypad.addEventListener('click', (e) => {});
 
 function press(num) {
   document.getElementById('answer').value += num;
