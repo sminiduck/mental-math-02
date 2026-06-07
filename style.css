@@ -17,6 +17,7 @@ body,
 .app {
   overflow: hidden;
   overscroll-behavior: none;
+  overscroll-behavior-y: contain;
 }
 
 body {
