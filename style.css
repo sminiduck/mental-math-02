@@ -16,6 +16,7 @@ html,
 body,
 .app {
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
