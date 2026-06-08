@@ -58,6 +58,20 @@ $menuForm.addEventListener('submit', (e) => {
   movePage('quiz');
 });
 
+document.getElementById('refresh-btn').addEventListener('click', () => {
+  location.reload();
+});
+
+document
+  .getElementById('fullscreen-btn')
+  .addEventListener('click', async () => {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await document.documentElement.requestFullscreen();
+    }
+  });
+
 // quiz page
 function nextProblem() {
   state.currProb = state.probGen();

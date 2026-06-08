@@ -110,6 +110,20 @@ button {
   cursor: pointer;
 }
 
+#menu button[type='submit'] {
+  width: 35%;
+}
+
+#menu .btn-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#menu .btn-group button:nth-child(2) {
+  margin-left: auto;
+}
+
 @media (pointer: fine) {
   button:hover {
     opacity: 0.9;
