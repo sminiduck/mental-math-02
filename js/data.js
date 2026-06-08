@@ -4,6 +4,7 @@ export const probBook = {
     sub: { func: subGen, text: '뺄셈' },
     mul: { func: mulGen, text: '곱셈' },
     div: { func: divGen, text: '나눗셈' },
+    det: { func: detGen, text: '행렬식(2by2)' },
   },
   Ids() {
     return Object.entries(this.probs).map(([Id, val]) => ({
@@ -19,7 +20,7 @@ export const probBook = {
 function addGen() {
   const [a, b] = [randomInt(1, 10), randomInt(1, 10)];
   return {
-    probDisp: `${a} + ${b}`,
+    probDisp: `$${a} + ${b}$`,
     answer: a + b,
   };
 }
@@ -45,6 +46,19 @@ function divGen() {
   return {
     probDisp: `${a} / ${b}`,
     answer: a / b,
+  };
+}
+
+function detGen() {
+  const [a, b, c, d] = [
+    randomInt(-10, 10),
+    randomInt(-10, 10),
+    randomInt(-10, 10),
+    randomInt(-10, 10),
+  ];
+  return {
+    probDisp: `다음 행렬식의 값을 구하시오 $\\begin{vmatrix}${a} & ${b} \\\\ ${c} & ${d}\\end{vmatrix}$`,
+    answer: a * d - b * c,
   };
 }
 

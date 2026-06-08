@@ -1,4 +1,5 @@
 import { probBook, checkAnsBook } from './data.js';
+import { renderTextWithMath } from './render.js';
 
 const INITIAL_STATE = {
   mode: null,
@@ -75,7 +76,9 @@ document
 // quiz page
 function nextProblem() {
   state.currProb = state.probGen();
-  document.getElementById('problem').textContent = state.currProb.probDisp;
+  const $problem = document.getElementById('problem');
+  renderTextWithMath($problem, state.currProb.probDisp);
+
   document.getElementById('answer').value = '';
 
   state.countProb += 1;

@@ -192,7 +192,7 @@ button {
 
 #keypad button[data-action='allClear'] {
   background-color: #d32f2f;
-  grid-column: span 2;
+  /* grid-column: span 2; */
 }
 
 #keypad button[data-action='backspace'] {
